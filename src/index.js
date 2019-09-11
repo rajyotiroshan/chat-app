@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 //serve static public folder
-app.use(express.static(path.join(__dirname,'./public')));
+app.use(express.static(path.join(__dirname,'../public')));
 
 //listen for server
 app.listen(PORT,(err)=>{
