@@ -18,6 +18,8 @@ app.use(express.static(path.join(__dirname,'../public')));
 io.on('connection',(socket)=>{
   //use socket object to communicate to the connected client.
   console.log('new connection established');
+  //emit welcome event to the newly connected client.
+  socket.emit('welcome', "Welcome to the chat group.." );
 
 })
 //listen for server
