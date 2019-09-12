@@ -20,12 +20,18 @@ io.on('connection',(socket)=>{
   console.log('new connection established');
   //emit welcome event to the newly connected client.
   socket.emit('welcome', "Welcome to the chat group.." );
+  //broadcast an event
+  socket.broadcast.emit('message', 'A new user has joined!');
   //listen for sendMessage
   socket.on('sendMessage',(msgStr)=>{
     //emits receiveMessage to the all connected client.
     io.emit('message', msgStr)
   })
 
+  //on disconnect
+  socket.on('disconnect', ()=>{
+    io.emit('message', 'A user has left!');
+  })
 })
 //listen for server
 server.listen(PORT,(err)=>{
