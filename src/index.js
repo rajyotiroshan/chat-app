@@ -21,6 +21,12 @@ io.on('connection',(socket)=>{
   console.log('new connection established');
   //emit is used to send an custom/in-built event to the client
   socket.emit('countUpdated', count);
+  //listen for client increment event
+  socket.on('increment', ()=>{
+    count++;
+    //emit the countUpdated event to the clients.
+    socket.emit('countUpdated', count);
+  })
 })
 //listen for server
 server.listen(PORT,(err)=>{
