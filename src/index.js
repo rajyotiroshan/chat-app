@@ -28,10 +28,17 @@ io.on('connection',(socket)=>{
     io.emit('message', msgStr)
   })
 
+  //listen for  sendLocation event
+  socket.on('sendLocation',(location)=>{
+    console.log(location);
+    io.emit('message', ` https://google.com/maps?q=${location.latitude},${location.longitude}`);
+  })
+
   //on disconnect
   socket.on('disconnect', ()=>{
     io.emit('message', 'A user has left!');
   })
+
 })
 //listen for server
 server.listen(PORT,(err)=>{
