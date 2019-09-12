@@ -1,0 +1,9 @@
+[33m11f8c6c[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m countUpdated emit to all connected clients
+[33mbd99148[m listen for increment event from client sode
+[33mf4fbbf0[m emit increment event from client
+[33m4d6a3c2[m data from server to client
+[33m646ccd2[m[33m ([m[1;31morigin/master[m[33m)[m client side socketio lib setup
+[33m8652d40[m config to use socketio
+[33m9dff43a[m modified server to use socket.io
+[33m9cb38c7[m make public on root, used nodemon
+[33mb433594[m basic setup
