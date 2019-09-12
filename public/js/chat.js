@@ -9,9 +9,12 @@ document.querySelector('#message-form').addEventListener("submit",(e)=>{
   e.preventDefault();
   let msg = e.target.elements.message.value;
   //emits sendMessage to server
-  socket.emit('sendMessage', msg, (msg)=>{
+  socket.emit('sendMessage', msg, (err)=>{
     //call when server listen for sendMessage.
-    console.log(msg);
+    if(err) {
+      return console.log(err);
+    }
+    console.log('Message deliverede');
   });
 })
 
@@ -28,6 +31,8 @@ document.querySelector('#send-location').addEventListener('click',()=>{
   //else
   navigator.geolocation.getCurrentPosition((position)=>{
     //console.log(position);
-    socket.emit('sendLocation', {latitude: position.coords.latitude, longitude: position.coords.longitude});
+    socket.emit('sendLocation', {latitude: position.coords.latitude, longitude: position.coords.longitude}, (msg)=>{
+      console.log(msg);
+    });
   })
 })
