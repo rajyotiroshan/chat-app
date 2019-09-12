@@ -1,15 +1,29 @@
 const socket = io();
+//Elements.
+const $messageForm = document.querySelector('#message-form');
+const $messageFormInput = document.querySelector('.msg-input');
+const $messageFormButton = document.querySelector('.msg-send');
+
 //listen for the welcome event from server.
 socket.on('welcome', (msg)=>{
   console.log(msg);
 })
 
 //listen for message-form submit event
-document.querySelector('#message-form').addEventListener("submit",(e)=>{
+$messageForm.addEventListener("submit",(e)=>{
   e.preventDefault();
+  //disable the form s.t user can not send another
+  //just yet
+  $messageFormButton.setAttribute('disabled', 'disabled');
   let msg = e.target.elements.message.value;
   //emits sendMessage to server
   socket.emit('sendMessage', msg, (err)=>{
+    //enable the form again.
+    $messageFormButton.removeAttribute('disabled');
+    //clear form input field.
+    $messageFormInput.value = '';
+    //focus form input
+    $messageFormInput.focus();
     //call when server listen for sendMessage.
     if(err) {
       return console.log(err);
