@@ -23,9 +23,10 @@ io.on('connection',(socket)=>{
   //broadcast an event
   socket.broadcast.emit('message', 'A new user has joined!');
   //listen for sendMessage
-  socket.on('sendMessage',(msgStr)=>{
+  socket.on('sendMessage',(msgStr, callback)=>{
     //emits receiveMessage to the all connected client.
     io.emit('message', msgStr)
+    callback("delivered");
   })
 
   //listen for  sendLocation event

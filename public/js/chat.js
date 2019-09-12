@@ -9,7 +9,10 @@ document.querySelector('#message-form').addEventListener("submit",(e)=>{
   e.preventDefault();
   let msg = e.target.elements.message.value;
   //emits sendMessage to server
-  socket.emit('sendMessage', msg);
+  socket.emit('sendMessage', msg, (msg)=>{
+    //call when server listen for sendMessage.
+    console.log(msg);
+  });
 })
 
 //listen for message event from server.
