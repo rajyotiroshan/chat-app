@@ -25,7 +25,8 @@ io.on('connection',(socket)=>{
   socket.on('increment', ()=>{
     count++;
     //emit the countUpdated event to the clients.
-    socket.emit('countUpdated', count);
+    //socket.emit('countUpdated', count);//Note : only emitting to single connection
+    io.emit('countUpdated',count);
   })
 })
 //listen for server
