@@ -22,9 +22,10 @@ socket.on('message', msgObj => {
 });
 
 //listen for locationMessage event 
-socket.on('locationMessage', (location, callback)=>{
+socket.on('locationMessage', (locObj, callback)=>{
   const html = Mustache.render(locationTemplate, {
-    locationURL: location
+    locationURL: locObj.url,
+    createdAt: moment(locObj.createdAt).format('h:mm a')
   })
   $messages.insertAdjacentHTML('beforeend', html);
   if(callback){
