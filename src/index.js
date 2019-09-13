@@ -20,7 +20,7 @@ io.on('connection',(socket)=>{
   //use socket object to communicate to the connected client.
   console.log('new connection established');
   //emit welcome event to the newly connected client.
-  socket.emit('welcome', "Welcome to the chat group.." );
+  socket.emit('message', "Welcome to the chat group.." );
   //broadcast an event
   socket.broadcast.emit('message', 'A new user has joined!');
   //listen for sendMessage
