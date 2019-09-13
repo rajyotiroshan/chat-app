@@ -8,6 +8,7 @@ const $messages = document.querySelector('#messages');
 
 //Template
 const messageTemplate = document.querySelector('#message-template').innerHTML;
+const locationTemplate = document.querySelector('#location-template').innerHTML;
 
 //listen for the welcome event from server.
 socket.on('message', message => {
@@ -19,6 +20,16 @@ socket.on('message', message => {
   $messages.insertAdjacentHTML('beforeend', html);
 });
 
+//listen for locationMessage event 
+socket.on('locationMessage', (location, callback)=>{
+  const html = Mustache.render(locationTemplate, {
+    locationURL: location
+  })
+  $messages.insertAdjacentHTML('beforeend', html);
+  if(callback){
+    callback();
+  }
+})
 //listen for message-form submit event
 $messageForm.addEventListener('submit', e => {
   e.preventDefault();

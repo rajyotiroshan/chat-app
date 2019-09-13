@@ -38,7 +38,7 @@ io.on('connection',(socket)=>{
   //listen for  sendLocation event
   socket.on('sendLocation',(location, acknowledge)=>{
     console.log(location);
-    io.emit('message', ` https://google.com/maps?q=${location.latitude},${location.longitude}`);
+    io.emit('locationMessage', ` https://google.com/maps?q=${location.latitude},${location.longitude}`);
     acknowledge('Location shared');
   })
 
