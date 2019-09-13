@@ -11,11 +11,12 @@ const messageTemplate = document.querySelector('#message-template').innerHTML;
 const locationTemplate = document.querySelector('#location-template').innerHTML;
 
 //listen for the welcome event from server.
-socket.on('message', message => {
-  console.log(message);
+socket.on('message', msgObj => {
+  console.log(msgObj.text);
   //render when message comes in
   const html = Mustache.render(messageTemplate,{
-    message
+    message: msgObj.text,
+    createdAt: moment(msgObj.createdAt).format('h:mm a')
   });
   $messages.insertAdjacentHTML('beforeend', html);
 });
