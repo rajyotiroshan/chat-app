@@ -21,10 +21,22 @@ app.use(express.static(path.join(__dirname,'../public')));
 io.on('connection',(socket)=>{
   //use socket object to communicate to the connected client.
   console.log('new connection established');
-  //emit welcome event to the newly connected client.
+  /* //emit welcome event to the newly connected client.
   socket.emit('message',generateMessage('Welcome'));
   //broadcast an event
-  socket.broadcast.emit('message', generateMessage('A new user has joined!'));
+  socket.broadcast.emit('message', generateMessage('A new user has joined!')); */
+  //listener for join
+  socket.on('join', ({username, room})=>{
+    //only use on server
+    socket.join(room);//give access to a whole level of event which can be emmited to and listened by onl client in this room.
+    socket.emit('message', generateMessage('Welcome'));
+    socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined`));
+    //socket.emit, io.emit, socekkt.broadcast.emit
+    //io.to.emit -->emit event to specific room clients
+    //socket.broadcast.to.emit ---> evryone but itself but in a room
+
+  })
+  
   //listen for sendMessage
   socket.on('sendMessage',(msgStr, callback)=>{
     //filter any bad words
@@ -33,7 +45,7 @@ io.on('connection',(socket)=>{
       return callback('Profanity is not allowed.');
     }
     //emits receiveMessage to the all connected client.
-    io.emit('message', generateMessage(msgStr))
+    io.to('delhi').emit('message', generateMessage(msgStr))
     callback();
   })
 
