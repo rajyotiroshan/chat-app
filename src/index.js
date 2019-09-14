@@ -37,6 +37,14 @@ io.on('connection',(socket)=>{
     socket.join(user.room);//give access to a whole level of event which can be emmited to and listened by onl client in this room.
     socket.emit('message', generateMessage('Admin','Welcome'));
     socket.broadcast.to(user.room).emit('message', generateMessage('Admin',`${user.username} has joined`));
+    
+    //emit roomData
+    io.to(user.room).emit('roomData', {
+      room: user.room,
+      users: getUsersInRoom(user.room)
+    })
+
+   
     //socket.emit, io.emit, socekkt.broadcast.emit
     //io.to.emit -->emit event to specific room clients
     //socket.broadcast.to.emit ---> evryone but itself but in a room
@@ -70,10 +78,13 @@ io.on('connection',(socket)=>{
   //on disconnect
   socket.on('disconnect', ()=>{
     const user = removeUser(socket.id) ;
-
     if(user) {
           io.to(user.room).emit('message', generateMessage('Admin',`${user.username} has left!`));
-    }
+          io.to(user.room).emit('roomData', {
+            room: user.room,
+            users: getUsersInRoom(user.room)
+          })
+        }
   })
 
 })
