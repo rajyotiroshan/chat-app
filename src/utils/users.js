@@ -1,6 +1,10 @@
-const users = []
+const users = [/**{id, username, room} */]
 
-//addUser, removeUser, getUser, getUsersInRoom
+/**
+ * @description add a new user
+ * @param {id, username, room}
+ * @returns newly added user  
+ */
 
 const addUser = ({id, username, room} )=>{
   //clean the data
@@ -31,7 +35,7 @@ const addUser = ({id, username, room} )=>{
 
 } 
 
-//removeUser
+
 /**
  * @description remove a user
  * @argument user id
@@ -46,14 +50,34 @@ const removeUser = (id) => {
   }
 }
 
-/* addUser({
-  id: 22, username: 'Rajan', room: 'delhi'
-})
+/**
+ * @description get a user
+ * @argument user_id
+ * @returns userObj or undefined
+ */
 
-const res = addUser({
-  id: 33,
-  username:'Rajan',
-  room:'delhi'
-})
-console.log(users);
-console.log(res); */
+ const getUser = user_id => {
+   const userObj = users.find(userObj=> userObj.id === user_id);
+   if(!user) return undefined;
+   return userObj;
+ }
+
+ /**
+  * @description get all users in a room
+  * @argument room
+  * @returns users array
+  */
+
+  const getUsersInRoom  = room =>{
+    const room = room.trim().toLowerCase();
+    return users.filter(user=> user.room === room);
+  }
+
+  //export the functions
+
+  module.exports = {
+    addUser,
+    removeUser,
+    getUser,
+    getUsersInRoom
+  }
