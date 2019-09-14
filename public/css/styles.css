@@ -85,6 +85,7 @@ button:disabled {
 
 /* Chat Page Layout */
 
+
 .chat {
     display: flex;
 }
@@ -94,7 +95,10 @@ button:disabled {
     color: white;
     background: #333744;
     width: 225px;
-    overflow-y: scroll
+    overflow-y: scroll;
+    position: relative;
+    left: 0;
+    transition: .4s left ease-out;
 }
 
 
@@ -114,15 +118,27 @@ button:disabled {
     overflow-y: scroll;
 }
 
+.fa-bars {
+    font-size: 0
+}
+
 /* media query*/
 
 @media  screen and (max-width: 600px) {
-    .chat__sidebar {
+    
+    .chat__sidebar--close {
         position: absolute;
         left: -250px;
+        transition: .4s left ease-in;
     }
     .chat__main {
         height: 100vh;
+    }
+
+    .fa-bars {
+        display: inline-block;
+        margin: 0 .5rem 0 .5rem;
+        font-size: 2rem;
     }
 }
 /* Message Styles */
