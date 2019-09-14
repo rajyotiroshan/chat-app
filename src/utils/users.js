@@ -3,7 +3,7 @@ const users = [/**{id, username, room} */]
 /**
  * @description add a new user
  * @param {id, username, room}
- * @returns newly added user  
+ * @returns newly added userObj 
  */
 
 const addUser = ({id, username, room} )=>{
@@ -31,7 +31,7 @@ const addUser = ({id, username, room} )=>{
   //Store user
   const user = { id, username, room}
   users.push(user);
-  return {user}
+  return {user}; //{user: {id, username, room}}
 
 } 
 
@@ -69,7 +69,7 @@ const removeUser = (id) => {
   */
 
   const getUsersInRoom  = room =>{
-    const room = room.trim().toLowerCase();
+    room = room.trim().toLowerCase();
     return users.filter(user=> user.room === room);
   }
 

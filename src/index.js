@@ -4,6 +4,7 @@ const express = require('express');
 const socketio = require('socket.io');
 const Filter = require('bad-words');
 const {generateMessage, generateLocationMessage} =  require('./utils/messages')
+const { getUser, addUser, removeUser, getUsersInRoom}  = require('./utils/users');
 
 const app = express();
 
@@ -26,15 +27,20 @@ io.on('connection',(socket)=>{
   //broadcast an event
   socket.broadcast.emit('message', generateMessage('A new user has joined!')); */
   //listener for join
-  socket.on('join', ({username, room})=>{
+  socket.on('join', ({username, room}, ackCallback)=>{
+    //new user unique id: socket.id
+    const { error, user} =   addUser({id: socket.id, username, room });
+    if(error) {
+      return ackCallback(error);
+    }
     //only use on server
-    socket.join(room);//give access to a whole level of event which can be emmited to and listened by onl client in this room.
+    socket.join(user.room);//give access to a whole level of event which can be emmited to and listened by onl client in this room.
     socket.emit('message', generateMessage('Welcome'));
-    socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined`));
+    socket.broadcast.to(user.room).emit('message', generateMessage(`${user.username} has joined`));
     //socket.emit, io.emit, socekkt.broadcast.emit
     //io.to.emit -->emit event to specific room clients
     //socket.broadcast.to.emit ---> evryone but itself but in a room
-
+   ackCallback();
   })
   
   //listen for sendMessage
@@ -58,7 +64,11 @@ io.on('connection',(socket)=>{
 
   //on disconnect
   socket.on('disconnect', ()=>{
-    io.emit('message', generateMessage('A user has left!'));
+    const user = removeUser(socket.id) ;
+
+    if(user) {
+          io.to(user.room).emit('message', generateMessage(`${user.username} has left!`));
+    }
   })
 
 })

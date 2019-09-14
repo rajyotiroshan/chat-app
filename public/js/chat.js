@@ -84,4 +84,9 @@ document.querySelector('#send-location').addEventListener('click', () => {
   });
 });
 
-socket.emit('join', {username, room});
+socket.emit('join', {username, room}, (errorMsg)=>{
+  if(errorMsg) {
+    alert(errorMsg)
+    location.href = '/'
+  }
+});
