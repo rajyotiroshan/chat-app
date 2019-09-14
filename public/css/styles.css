@@ -97,6 +97,8 @@ button:disabled {
     overflow-y: scroll
 }
 
+
+
 /* Chat styles */
 
 .chat__main {
@@ -112,6 +114,17 @@ button:disabled {
     overflow-y: scroll;
 }
 
+/* media query*/
+
+@media  screen and (max-width: 600px) {
+    .chat__sidebar {
+        position: absolute;
+        left: -250px;
+    }
+    .chat__main {
+        height: 100vh;
+    }
+}
 /* Message Styles */
 
 .message {
