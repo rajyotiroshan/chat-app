@@ -35,8 +35,8 @@ io.on('connection',(socket)=>{
     }
     //only use on server
     socket.join(user.room);//give access to a whole level of event which can be emmited to and listened by onl client in this room.
-    socket.emit('message', generateMessage('Welcome'));
-    socket.broadcast.to(user.room).emit('message', generateMessage(`${user.username} has joined`));
+    socket.emit('message', generateMessage('Admin','Welcome'));
+    socket.broadcast.to(user.room).emit('message', generateMessage('Admin',`${user.username} has joined`));
     //socket.emit, io.emit, socekkt.broadcast.emit
     //io.to.emit -->emit event to specific room clients
     //socket.broadcast.to.emit ---> evryone but itself but in a room
@@ -50,15 +50,20 @@ io.on('connection',(socket)=>{
     if(filter.isProfane(msgStr)){
       return callback('Profanity is not allowed.');
     }
+    //access client id
+    let id = socket.id;
+    //access the room
+    let userObj = getUser(id);
+    let room = userObj.room;
     //emits receiveMessage to the all connected client.
-    io.to('delhi').emit('message', generateMessage(msgStr))
+    io.to(room).emit('message', generateMessage(userObj.username ,msgStr))
     callback();
   })
 
   //listen for  sendLocation event
   socket.on('sendLocation',(location, acknowledge)=>{
-    console.log(location);
-    io.emit('locationMessage', generateLocationMessage('https://google.com/maps?q=${location.latitude},${location.longitude}'));
+    let userObj  = getUser(socket.id);
+    io.to(userObj.room).emit('locationMessage', generateLocationMessage(userObj.username,`https://google.com/maps?q=${location.latitude},${location.longitude}`));
     acknowledge('Location shared');
   })
 
@@ -67,7 +72,7 @@ io.on('connection',(socket)=>{
     const user = removeUser(socket.id) ;
 
     if(user) {
-          io.to(user.room).emit('message', generateMessage(`${user.username} has left!`));
+          io.to(user.room).emit('message', generateMessage('Admin',`${user.username} has left!`));
     }
   })
 

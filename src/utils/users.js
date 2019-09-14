@@ -58,7 +58,7 @@ const removeUser = (id) => {
 
  const getUser = user_id => {
    const userObj = users.find(userObj=> userObj.id === user_id);
-   if(!user) return undefined;
+   if(!userObj) return undefined;
    return userObj;
  }
 

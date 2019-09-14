@@ -15,9 +15,11 @@ const {username, room} = Qs.parse(location.search, {ignoreQueryPrefix: true});
 
 //listen for the welcome event from server.
 socket.on('message', msgObj => {
-  console.log(msgObj.text);
+ // console.log(msgObj.text);
   //render when message comes in
+  let username = msgObj.username;
   const html = Mustache.render(messageTemplate,{
+    username,
     message: msgObj.text,
     createdAt: moment(msgObj.createdAt).format('h:mm a')
   });
@@ -26,7 +28,9 @@ socket.on('message', msgObj => {
 
 //listen for locationMessage event 
 socket.on('locationMessage', (locObj, callback)=>{
+  const username = locObj.username;
   const html = Mustache.render(locationTemplate, {
+    username,
     locationURL: locObj.url,
     createdAt: moment(locObj.createdAt).format('h:mm a')
   })
