@@ -98,9 +98,6 @@ button:disabled {
     background: #333744;
     width: 225px;
     overflow-y: scroll;
-    position: absolute;
-    left: 0;
-    transition: .5s all ease-out;
 }
 
 

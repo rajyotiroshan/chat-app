@@ -1,27 +1,36 @@
-@media  screen and (max-width: 600px) {
+@media screen and (max-width: 600px) {
+  .chat__sidebar {
+    height: 90vh;
+    color: white;
+    background: #333744;
+    width: 225px;
+    overflow-y: scroll;
+    position: absolute;
+    left: 0;
+    transition: 0.5s all ease-out;
+  }
 
-    .chat__sidebar--close {
-        position: absolute;
-        left: -225px;
-    }
+  .chat__sidebar--close {
+    position: absolute;
+    left: -225px;
+  }
 
-    .fa-bars {
-        display: inline-block;
-        margin: 0 .5rem 0 .5rem;
-        font-size: 2rem;
-    }
+  .fa-bars {
+    display: inline-block;
+    margin: 0 0.5rem 0 0.5rem;
+    font-size: 2rem;
+  }
 
-    .compose {
-        padding: 5px 5px 5px 2px;
-    }
+  .compose {
+    padding: 5px 5px 5px 2px;
+  }
 
-    .compose form{
-      margin-right:2px;
-    }
+  .compose form {
+    margin-right: 2px;
+  }
 
-    .compose form .msg-input {
-      padding: 2px;
-      margin: 0px;
-
-    }
+  .compose form .msg-input {
+    padding: 2px;
+    margin: 0px;
+  }
 }
