@@ -1,0 +1,2 @@
+@import './styles.css';
+@import './mobileMax600.css' screen and (max-width: 600px);
